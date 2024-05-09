@@ -1,0 +1,7 @@
+<dal name="com.dal.test">
+    <databaseSets>
+        <databaseSet name="MySql_yimon" provider="mySqlProvider">
+            <add name="yimon" databaseType="Master" connectionString="yimon"/>
+        </databaseSet>
+    </databaseSets>
+</dal>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!-- 日志级别排序：TRACE < DEBUG < INFO < WARN < ERROR -->
+    <!-- 控台日志-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yy.MM.dd HH:mm:ss} [threadId:%thread, traceId:%X{trace_id}] %highlight(%-5level) %logger{36} - %boldMagenta(%msg%n)
+            </pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志-->
+    <springProperty scope="context" name="LOG_HOME" source="logging.file.path" defaultValue="./logs"/>
+    <appender name="FILE-APPENDER"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名 -->
+            <FileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}/yimon-admin.%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <!--日志文件保留天数 -->
+            <MaxHistory>30</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <ImmediateFlush>true</ImmediateFlush>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            <pattern>%d{yy.MM.dd HH:mm:ss.SSS} [threadId:%thread, traceId:%X{trace_id}] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+        <!-- 过滤掉DEBUG、TRACE的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 异步输出 -->
+    <appender name="ASYNC-FILE-APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>2048</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="FILE-APPENDER"/>
+    </appender>
+
+    <!-- 日志文件 -->
+    <logger name="com.ctrip" level="OFF" />
+    <logger name="com.yimon.admin" level="INFO" additivity="false">
+        <appender-ref ref="FILE-APPENDER"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="FILE-APPENDER"/>
+    </root>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
