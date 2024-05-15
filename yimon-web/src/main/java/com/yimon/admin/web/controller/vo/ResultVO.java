@@ -1,6 +1,10 @@
 package com.yimon.admin.web.controller.vo;
 
 import com.google.gson.annotations.SerializedName;
+import com.yimon.admin.core.exception.BusinessException;
+import com.yimon.admin.core.exception.InvokeException;
+import com.yimon.admin.core.exception.RejectedException;
+import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.core.pojo.ABasePojo;
 import com.yimon.admin.core.result.ReturnCode;
 import com.yimon.admin.util.GsonHolder;
@@ -44,7 +48,42 @@ public class ResultVO extends ABasePojo {
         ResultVO resultVO = new ResultVO();
         resultVO.setRespCode(ReturnCode.SUCCEED.code());
         resultVO.setRespDesc(ReturnCode.SUCCEED.msg());
-        resultVO.setData(GsonHolder.toJson(data));
+        resultVO.setData(GsonHolder.toJsonNormDate(data));
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(ReturnCode returnCode) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(returnCode.code());
+        resultVO.setRespDesc(returnCode.msg());
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(BusinessException e) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(e.getCode());
+        resultVO.setRespDesc(e.getMessage());
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(InvokeException e) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(e.getCode());
+        resultVO.setRespDesc(e.getMessage());
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(RejectedException e) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(e.getCode());
+        resultVO.setRespDesc(e.getMessage());
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(ValidateException e) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(e.getCode());
+        resultVO.setRespDesc(e.getMessage());
         return resultVO;
     }
 

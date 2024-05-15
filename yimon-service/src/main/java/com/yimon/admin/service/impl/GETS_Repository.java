@@ -1,6 +1,7 @@
 package com.yimon.admin.service.impl;
 
 import com.yimon.admin.core.exception.BusinessException;
+import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.dal.repository.CrudRepository;
 import com.yimon.admin.service.ARepositoryService;
 import com.yimon.admin.service.RepositoryService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,7 +45,10 @@ public class GETS_Repository extends ARepositoryService implements RepositorySer
             return result;
         } catch (SQLException e) {
             log.error("GETS sql exception:", e);
-            throw new BusinessException(ResultCode.DB_FAIL.code(), ResultCode.DB_FAIL.msg());
+            if (e instanceof SQLSyntaxErrorException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            throw new BusinessException(ResultCode.DB_FAIL.code(), e.getMessage());
         }
     }
 
@@ -60,7 +65,10 @@ public class GETS_Repository extends ARepositoryService implements RepositorySer
             result.put(TOTAL, total);
         } catch (SQLException e) {
             log.error("GETS total sql exception:", e);
-            throw new BusinessException(ResultCode.DB_FAIL.code(), ResultCode.DB_FAIL.msg());
+            if (e instanceof SQLSyntaxErrorException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            throw new BusinessException(ResultCode.DB_FAIL.code(), e.getMessage());
         }
         //计算总页数
         if (parseInt(PAGE_NO, paramsMap.get(PAGE_NO)) > 0 || parseInt(PAGE_SIZE, paramsMap.get(PAGE_SIZE)) > 0) {

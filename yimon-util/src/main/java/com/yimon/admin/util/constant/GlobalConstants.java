@@ -9,6 +9,14 @@ public class GlobalConstants {
 
     public static final String TRACE_ID = "trace_id";
 
+    public static final String REQUEST_TIME = "request_time";
+
+    public static final String REQUEST_DEVICE = "request_device";
+
+    public static final String TOKEN = "token";
+
+    public static final String DATA = "data";
+
     private GlobalConstants() {
     }
 

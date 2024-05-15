@@ -1,6 +1,7 @@
 package com.yimon.admin.service.impl;
 
 import com.yimon.admin.core.exception.BusinessException;
+import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.dal.repository.CrudRepository;
 import com.yimon.admin.service.ARepositoryService;
 import com.yimon.admin.service.RepositoryService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,7 +43,10 @@ public class DELETE_Repository extends ARepositoryService implements RepositoryS
             return result;
         } catch (SQLException e) {
             log.error("DELETE sql exception:", e);
-            throw new BusinessException(ResultCode.DB_FAIL.code(), ResultCode.DB_FAIL.msg());
+            if (e instanceof SQLSyntaxErrorException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            throw new BusinessException(ResultCode.DB_FAIL.code(), e.getMessage());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.yimon.admin.service.impl;
 
 import com.yimon.admin.core.exception.BusinessException;
-import com.yimon.admin.core.exception.RejectedException;
+import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.dal.repository.CrudRepository;
 import com.yimon.admin.service.ARepositoryService;
 import com.yimon.admin.service.RepositoryService;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.*;
 
 /**
@@ -37,7 +38,7 @@ public class POST_Repository extends ARepositoryService implements RepositorySer
         Object where = paramsMap.get(WHERE);
         if (where == null) {
             log.warn("POST not have where");
-            throw new RejectedException(ResultCode.REJECT.code(), "当前操作无条件，请求拒绝");
+            throw new ValidateException(ResultCode.PARAMS_ERROR.code(), "post method must have @WHERE@ , please check");
         }
         List<String> whereList = Arrays.asList(String.valueOf(where).split(","));
         whereList.forEach(w -> {
@@ -54,7 +55,10 @@ public class POST_Repository extends ARepositoryService implements RepositorySer
             return result;
         } catch (SQLException e) {
             log.error("POST sql exception:", e);
-            throw new BusinessException(ResultCode.DB_FAIL.code(), ResultCode.DB_FAIL.msg());
+            if (e instanceof SQLSyntaxErrorException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            throw new BusinessException(ResultCode.DB_FAIL.code(), e.getMessage());
         }
     }
 }

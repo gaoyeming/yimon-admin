@@ -1,7 +1,15 @@
 <dal name="com.dal.test">
     <databaseSets>
         <databaseSet name="MySql_yimon" provider="mySqlProvider">
-            <add name="yimon" databaseType="Master" connectionString="yimon"/>
+            <add name="yimon_admin" databaseType="Master" connectionString="yimon_admin"/>
         </databaseSet>
     </databaseSets>
+
+    <LogListener enabled="true">
+        <logger>com.ctrip.platform.dal.dao.client.NullLogger</logger>
+        <settings>
+            <encrypt>false</encrypt>
+            <simplified>true</simplified>
+        </settings>
+    </LogListener>
 </dal>

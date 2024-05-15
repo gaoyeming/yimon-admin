@@ -5,7 +5,7 @@
     <!-- 控台日志-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{yy.MM.dd HH:mm:ss} [threadId:%thread, traceId:%X{trace_id}] %highlight(%-5level) %logger{36} - %boldMagenta(%msg%n)
+            <pattern>%d{yy.MM.dd HH:mm:ss} [threadId:%thread, traceId:%X{trace_id}] %highlight(%-5level) %logger{36} - %highlight(%msg%n)
             </pattern>
             <charset>utf-8</charset>
         </encoder>
@@ -46,8 +46,9 @@
         <appender-ref ref="FILE-APPENDER"/>
     </appender>
 
-    <!-- 日志文件 -->
-    <logger name="com.ctrip" level="OFF" />
+    <!-- 日志排除 -->
+    <logger name="com.ctrip" level="OFF"/>
+    <!-- 日志追加 -->
     <logger name="com.yimon.admin" level="INFO" additivity="false">
         <appender-ref ref="FILE-APPENDER"/>
         <appender-ref ref="CONSOLE"/>

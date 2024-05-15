@@ -25,7 +25,7 @@ public class RequestVO extends ABasePojo {
      * {
      * "deviceType": "设备类型"
      * "deviceTerminalNo": "设备编号",
-     * "deviceInfo": "{\"IP\":\"127.0.0.1\",\"MAC\":\"${MAC}\",\"IMEI\":\"${IMEI}\",\"IMSI\":\"${IMSI}\",\"ICCID\":\"${ICCID}\",\"WIFIMAC\":\"${WIFIMAC}\",\"GPS\":\"${GPS}\"}"
+     * "deviceAddress": "{\"IP\":\"127.0.0.1\",\"MAC\":\"${MAC}\",\"IMEI\":\"${IMEI}\",\"IMSI\":\"${IMSI}\",\"ICCID\":\"${ICCID}\",\"WIFIMAC\":\"${WIFIMAC}\",\"GPS\":\"${GPS}\"}"
      * }
      */
     @SerializedName("request_device")

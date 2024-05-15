@@ -46,8 +46,7 @@ public class GlobalRequestHandler implements RequestBodyAdvice {
      */
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
-//        String ipAddress = HttpServletHandler.getIpAddress(httpServletRequest);
-        return new MyHttpInputMessage(inputMessage, null);
+        return new MyHttpInputMessage(inputMessage, httpServletRequest);
     }
 
     /**

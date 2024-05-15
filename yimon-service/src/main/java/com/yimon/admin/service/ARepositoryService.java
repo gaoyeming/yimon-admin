@@ -1,6 +1,5 @@
 package com.yimon.admin.service;
 
-import com.yimon.admin.core.exception.RejectedException;
 import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.core.util.StringUtils;
 import com.yimon.admin.util.constant.ResultCode;
@@ -44,14 +43,14 @@ public abstract class ARepositoryService {
         return classList.stream().filter(clazz -> {
             Table table = clazz.getAnnotation(Table.class);
             return tableName.equals(table.name());
-        }).findFirst().orElseThrow(() -> new RejectedException(ResultCode.TABLE_NOT_FIND.code(), ResultCode.TABLE_NOT_FIND.msg()));
+        }).findFirst().orElseThrow(() -> new ValidateException(ResultCode.PARAMS_ERROR.code(), StringUtils.join("Table '", tableName, "' doesn't exist, please check")));
     }
 
     protected LinkedHashMap<String, Object> join(StringBuilder sql, Map<String, Object> paramsMap, String linkStr) {
         LinkedHashMap<String, Object> paramsLink = new LinkedHashMap<>();
         paramsMap.forEach((k, v) -> {
             //特殊字符不需要进行拼接
-            if (WHERE.equals(k) || COLUMN.equals(k) || PAGE_NO.equals(k) || PAGE_SIZE.equals(k) || PAGE.equals(k) || TOTAL.equals(k) || ROWS.equals(k) || ORDER.equals(k)) {
+            if (WHERE.equals(k) || COLUMN.equals(k) || ORDER.equals(k) || PAGE_NO.equals(k) || PAGE_SIZE.equals(k) || PAGE.equals(k) || TOTAL.equals(k) || ROWS.equals(k) || RESULT.equals(k)) {
                 return;
             }
             if (v instanceof List) {
@@ -105,15 +104,20 @@ public abstract class ARepositoryService {
             return Integer.MIN_VALUE;
         }
         int val;
-        if (obj instanceof String || obj instanceof Integer) {
-            val = Integer.parseInt(String.valueOf(obj));
-        } else if (obj instanceof Double) {
-            val = Double.valueOf(String.valueOf(obj)).intValue();
-        } else if (obj instanceof Long) {
-            val = Long.valueOf(String.valueOf(obj)).intValue();
-        } else {
-            throw new ValidateException(ResultCode.REJECT.code(), key + "不符合规范");
+        try {
+            if (obj instanceof String || obj instanceof Integer) {
+                val = Integer.parseInt(String.valueOf(obj));
+            } else if (obj instanceof Double) {
+                val = Double.valueOf(String.valueOf(obj)).intValue();
+            } else if (obj instanceof Long) {
+                val = Long.valueOf(String.valueOf(obj)).intValue();
+            } else {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), StringUtils.join("Illegal ", key, ", please check"));
+            }
+        } catch (NumberFormatException e) {
+            throw new ValidateException(ResultCode.PARAMS_ERROR.code(), StringUtils.join("Illegal ", key, ", please check"));
         }
+
         return val;
     }
 

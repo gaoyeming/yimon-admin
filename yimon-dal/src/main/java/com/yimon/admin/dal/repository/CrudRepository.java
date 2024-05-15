@@ -48,7 +48,7 @@ public class CrudRepository {
         FreeSelectSqlBuilder<List<T>> builder = new FreeSelectSqlBuilder<>();
         builder.setTemplate(sql);
         builder.mapWith(tClass);
-        if (pageNo != null && pageSize != null) {
+        if (pageNo != null && pageSize != null && pageNo > 0 && pageSize > 0) {
             builder.atPage(pageNo, pageSize);
         }
         StatementParameters parameters = covertParameters(paramMap);

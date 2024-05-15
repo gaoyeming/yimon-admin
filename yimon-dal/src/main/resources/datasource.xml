@@ -1,8 +1,8 @@
 <Datasources location="$classpath">
-    <Datasource name="yimon"
+    <Datasource name="yimon_admin"
                 userName="root"
                 password="123456"
-                connectionUrl="jdbc:mysql://127.0.0.1:3306/yimon"
+                connectionUrl="jdbc:mysql://127.0.0.1:3306/yimon_admin"
                 driverClassName="com.mysql.cj.jdbc.Driver"
                 testWhileIdle="true"
                 testOnBorrow="false"

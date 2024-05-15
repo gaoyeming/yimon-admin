@@ -1,6 +1,7 @@
 package com.yimon.admin.service.impl;
 
 import com.yimon.admin.core.exception.BusinessException;
+import com.yimon.admin.core.exception.ValidateException;
 import com.yimon.admin.dal.repository.CrudRepository;
 import com.yimon.admin.service.ARepositoryService;
 import com.yimon.admin.service.RepositoryService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +38,10 @@ public class PUT_Repository extends ARepositoryService implements RepositoryServ
         //记录参数并保证与新增的一致
         LinkedHashMap<String, Object> paramsLink = new LinkedHashMap<>();
         paramsMap.forEach((k, v) -> {
+            //特殊字符不需要进行拼接
+            if (WHERE.equals(k) || COLUMN.equals(k) || ORDER.equals(k) || PAGE_NO.equals(k) || PAGE_SIZE.equals(k) || PAGE.equals(k) || TOTAL.equals(k) || ROWS.equals(k) || RESULT.equals(k)) {
+                return;
+            }
             sql.append(k).append(", ");
             values.append("?, ");
             paramsLink.put(k, v);
@@ -55,7 +62,13 @@ public class PUT_Repository extends ARepositoryService implements RepositoryServ
             return result;
         } catch (SQLException e) {
             log.error("PUT sql exception:", e);
-            throw new BusinessException(ResultCode.DB_FAIL.code(), ResultCode.DB_FAIL.msg());
+            if (e instanceof SQLSyntaxErrorException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                throw new ValidateException(ResultCode.PARAMS_ERROR.code(), e.getMessage());
+            }
+            throw new BusinessException(ResultCode.DB_FAIL.code(), e.getMessage());
         }
     }
 }

@@ -24,10 +24,20 @@ public class SysOperationLog extends ABasePojo implements DalPojo {
     @Type(value = Types.TIMESTAMP)
     private Timestamp createTime;
 
-    @Column(name = "update_time")
+    @Column(name = "dataChange_lastTime")
     @Type(value = Types.INTEGER)
-    private Timestamp updateTime;
+    private Timestamp dataChangeLastTime;
 
+    /**
+     * 操作类别，可以标记不同系统操作（yimon_admin）
+     */
+    @Column(name = "operator_type")
+    @Type(value = Types.VARCHAR)
+    private String operatorType;
+
+    /**
+     * 操作用户
+     */
     @Column(name = "opera_user")
     @Type(value = Types.VARCHAR)
     private String operaUser;
@@ -38,6 +48,41 @@ public class SysOperationLog extends ABasePojo implements DalPojo {
     @Column(name = "opera_title")
     @Type(value = Types.VARCHAR)
     private String operaTitle;
+
+    /**
+     * 请求设备信息
+     */
+    @Column(name = "opera_device")
+    @Type(value = Types.VARCHAR)
+    private String operaDevice;
+
+    /**
+     * 操作入口
+     */
+    @Column(name = "opera_url")
+    @Type(value = Types.VARCHAR)
+    private String operaUrl;
+
+    /**
+     * 操作参数
+     */
+    @Column(name = "opera_param")
+    @Type(value = Types.VARCHAR)
+    private String operaParam;
+
+    /**
+     * 操作结果
+     */
+    @Column(name = "opera_result")
+    @Type(value = Types.VARCHAR)
+    private String operaResult;
+
+    /**
+     * 操作状态（0正常 1异常）
+     */
+    @Column(name = "status")
+    @Type(value = Types.INTEGER)
+    private Integer status;
 
     public Long getId() {
         return id;
@@ -55,12 +100,20 @@ public class SysOperationLog extends ABasePojo implements DalPojo {
         this.createTime = createTime;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getDataChangeLastTime() {
+        return dataChangeLastTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setDataChangeLastTime(Timestamp dataChangeLastTime) {
+        this.dataChangeLastTime = dataChangeLastTime;
+    }
+
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     public String getOperaUser() {
@@ -77,5 +130,45 @@ public class SysOperationLog extends ABasePojo implements DalPojo {
 
     public void setOperaTitle(String operaTitle) {
         this.operaTitle = operaTitle;
+    }
+
+    public String getOperaDevice() {
+        return operaDevice;
+    }
+
+    public void setOperaDevice(String operaDevice) {
+        this.operaDevice = operaDevice;
+    }
+
+    public String getOperaUrl() {
+        return operaUrl;
+    }
+
+    public void setOperaUrl(String operaUrl) {
+        this.operaUrl = operaUrl;
+    }
+
+    public String getOperaParam() {
+        return operaParam;
+    }
+
+    public void setOperaParam(String operaParam) {
+        this.operaParam = operaParam;
+    }
+
+    public String getOperaResult() {
+        return operaResult;
+    }
+
+    public void setOperaResult(String operaResult) {
+        this.operaResult = operaResult;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
