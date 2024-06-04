@@ -48,8 +48,9 @@
 
     <!-- 日志排除 -->
     <logger name="com.ctrip" level="OFF"/>
+    <logger name="org.reflections" level="OFF"/>
     <!-- 日志追加 -->
-    <logger name="com.yimon.admin" level="INFO" additivity="false">
+    <logger name="org.yimon.admin" level="INFO" additivity="false">
         <appender-ref ref="FILE-APPENDER"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
