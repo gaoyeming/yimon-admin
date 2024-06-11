@@ -3,187 +3,159 @@ package org.yimon.admin.dal.entity;
 import com.ctrip.platform.dal.dao.DalPojo;
 import com.ctrip.platform.dal.dao.annotation.Database;
 import com.ctrip.platform.dal.dao.annotation.Type;
-import org.yimon.admin.core.pojo.ABasePojo;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.sql.Types;
 
 @Entity
-@Database(name = "MySql_yimon")
-@Table(name = "sys_operation_log")
-public class SysOperationLog extends ABasePojo implements DalPojo {
+@Database(name="MySql_yimon")
+@Table(name="sys_operation_log")
+public class SysOperationLog implements DalPojo {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Type(value=Types.BIGINT)
+	private Long id;
+	
+	@Column(name="create_time")
+	@Type(value=Types.TIMESTAMP)
+	private Timestamp createTime;
+	
+	@Column(name="dataChange_lastTime")
+	@Type(value=Types.TIMESTAMP)
+	private Timestamp dataChangeLastTime;
+	
+	@Column(name="trace_id")
+	@Type(value=Types.VARCHAR)
+	private String traceId;
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(value = Types.INTEGER)
-    private Long id;
+	@Column(name="opera_type")
+	@Type(value=Types.VARCHAR)
+	private String operaType;
+	
+	@Column(name="opera_user")
+	@Type(value=Types.VARCHAR)
+	private String operaUser;
+	
+	@Column(name="opera_title")
+	@Type(value=Types.VARCHAR)
+	private String operaTitle;
+	
+	@Column(name="opera_device")
+	@Type(value=Types.VARCHAR)
+	private String operaDevice;
+	
+	@Column(name="opera_url")
+	@Type(value=Types.VARCHAR)
+	private String operaUrl;
+	
+	@Column(name="opera_param")
+	@Type(value=Types.VARCHAR)
+	private String operaParam;
+	
+	@Column(name="opera_result")
+	@Type(value=Types.VARCHAR)
+	private String operaResult;
+	
+	@Column(name="status")
+	@Type(value=Types.INTEGER)
+	private Integer status;
 
-    @Column(name = "create_time")
-    @Type(value = Types.TIMESTAMP)
-    private Timestamp createTime;
+	public Long getId() {
+		return id;
+	}
 
-    @Column(name = "dataChange_lastTime")
-    @Type(value = Types.INTEGER)
-    private Timestamp dataChangeLastTime;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * 追踪流水号
-     */
-    @Column(name = "trace_id")
-    @Type(value = Types.VARCHAR)
-    private String traceId;
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
 
-    /**
-     * 操作类别，可以标记不同系统操作（yimon_admin）
-     */
-    @Column(name = "opera_type")
-    @Type(value = Types.VARCHAR)
-    private String operaType;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    /**
-     * 操作用户
-     */
-    @Column(name = "opera_user")
-    @Type(value = Types.VARCHAR)
-    private String operaUser;
+	public Timestamp getDataChangeLastTime() {
+		return dataChangeLastTime;
+	}
 
-    /**
-     * 操作标题
-     */
-    @Column(name = "opera_title")
-    @Type(value = Types.VARCHAR)
-    private String operaTitle;
+	public void setDataChangeLastTime(Timestamp dataChangeLastTime) {
+		this.dataChangeLastTime = dataChangeLastTime;
+	}
 
-    /**
-     * 请求设备信息
-     */
-    @Column(name = "opera_device")
-    @Type(value = Types.VARCHAR)
-    private String operaDevice;
+	public String getTraceId() {
+		return traceId;
+	}
 
-    /**
-     * 操作入口
-     */
-    @Column(name = "opera_url")
-    @Type(value = Types.VARCHAR)
-    private String operaUrl;
+	public void setTraceId(String traceId) {
+		this.traceId = traceId;
+	}
 
-    /**
-     * 操作参数
-     */
-    @Column(name = "opera_param")
-    @Type(value = Types.VARCHAR)
-    private String operaParam;
+	public String getOperaType() {
+		return operaType;
+	}
 
-    /**
-     * 操作结果
-     */
-    @Column(name = "opera_result")
-    @Type(value = Types.VARCHAR)
-    private String operaResult;
+	public void setOperaType(String operaType) {
+		this.operaType = operaType;
+	}
 
-    /**
-     * 操作状态（0正常 1异常）
-     */
-    @Column(name = "status")
-    @Type(value = Types.INTEGER)
-    private Integer status;
+	public String getOperaUser() {
+		return operaUser;
+	}
 
-    public String getTraceId() {
-        return traceId;
-    }
+	public void setOperaUser(String operaUser) {
+		this.operaUser = operaUser;
+	}
 
-    public void setTraceId(String traceId) {
-        this.traceId = traceId;
-    }
+	public String getOperaTitle() {
+		return operaTitle;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setOperaTitle(String operaTitle) {
+		this.operaTitle = operaTitle;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getOperaDevice() {
+		return operaDevice;
+	}
 
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public void setOperaDevice(String operaDevice) {
+		this.operaDevice = operaDevice;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public String getOperaUrl() {
+		return operaUrl;
+	}
 
-    public Timestamp getDataChangeLastTime() {
-        return dataChangeLastTime;
-    }
+	public void setOperaUrl(String operaUrl) {
+		this.operaUrl = operaUrl;
+	}
 
-    public void setDataChangeLastTime(Timestamp dataChangeLastTime) {
-        this.dataChangeLastTime = dataChangeLastTime;
-    }
+	public String getOperaParam() {
+		return operaParam;
+	}
 
-    public String getOperaType() {
-        return operaType;
-    }
+	public void setOperaParam(String operaParam) {
+		this.operaParam = operaParam;
+	}
 
-    public void setOperaType(String operaType) {
-        this.operaType = operaType;
-    }
+	public String getOperaResult() {
+		return operaResult;
+	}
 
-    public String getOperaUser() {
-        return operaUser;
-    }
+	public void setOperaResult(String operaResult) {
+		this.operaResult = operaResult;
+	}
 
-    public void setOperaUser(String operaUser) {
-        this.operaUser = operaUser;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public String getOperaTitle() {
-        return operaTitle;
-    }
-
-    public void setOperaTitle(String operaTitle) {
-        this.operaTitle = operaTitle;
-    }
-
-    public String getOperaDevice() {
-        return operaDevice;
-    }
-
-    public void setOperaDevice(String operaDevice) {
-        this.operaDevice = operaDevice;
-    }
-
-    public String getOperaUrl() {
-        return operaUrl;
-    }
-
-    public void setOperaUrl(String operaUrl) {
-        this.operaUrl = operaUrl;
-    }
-
-    public String getOperaParam() {
-        return operaParam;
-    }
-
-    public void setOperaParam(String operaParam) {
-        this.operaParam = operaParam;
-    }
-
-    public String getOperaResult() {
-        return operaResult;
-    }
-
-    public void setOperaResult(String operaResult) {
-        this.operaResult = operaResult;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }

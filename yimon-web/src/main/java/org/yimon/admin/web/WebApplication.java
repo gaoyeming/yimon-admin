@@ -2,7 +2,6 @@ package org.yimon.admin.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.yimon.admin.core.log.BaseLogger;
 import org.yimon.admin.core.log.LogLevel;
 
@@ -26,7 +25,7 @@ public class WebApplication {
             System.setProperty("java.awt.headless", "false");
             Desktop.getDesktop().browse(new URI("http://127.0.0.1:8080/monitor"));
             BaseLogger.logWithLevel(LogLevel.DEBUG, "web running");
-        }  catch (IOException | URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             BaseLogger.logWithLevel(LogLevel.DEBUG, "web exception");
         }
     }

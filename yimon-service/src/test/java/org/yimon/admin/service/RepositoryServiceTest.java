@@ -1,10 +1,6 @@
 package org.yimon.admin.service;
 
 import com.ctrip.platform.dal.dao.DalClientFactory;
-import org.yimon.admin.dal.repository.CrudRepository;
-import org.yimon.admin.service.impl.DELETE_Repository;
-import org.yimon.admin.service.impl.POST_Repository;
-import org.yimon.admin.service.impl.PUT_Repository;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +10,10 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.yimon.admin.dal.repository.CrudRepository;
+import org.yimon.admin.service.impl.DELETE_Repository;
+import org.yimon.admin.service.impl.POST_Repository;
+import org.yimon.admin.service.impl.PUT_Repository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -43,11 +43,11 @@ public class RepositoryServiceTest {
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        /**
-         * Initialize DalClientFactory.
-         * The Dal.config can be specified from class-path or local file path.
-         * One of follow three need to be enabled.
-         **/
+        /*
+          Initialize DalClientFactory.
+          The Dal.config can be specified from class-path or local file path.
+          One of follow three need to be enabled.
+         */
         DalClientFactory.initClientFactory(); // load from class-path Dal.config
         DalClientFactory.warmUpConnections();
 

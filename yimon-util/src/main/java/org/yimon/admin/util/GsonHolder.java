@@ -21,7 +21,7 @@ public final class GsonHolder {
         // 设置日期格式
         gsonBuilder.setDateFormat(DatePattern.NORM_DATETIME_PATTERN);
         // 创建Gson实例
-        INSTANCE_NORM_DATE  = gsonBuilder.create();
+        INSTANCE_NORM_DATE = gsonBuilder.create();
     }
 
     private GsonHolder() {
@@ -45,6 +45,24 @@ public final class GsonHolder {
                 }.getType());
             }
         } catch (Exception ignored) {
+        } finally {
+            if (resultMap == null) {
+                resultMap = new HashMap<>();
+            }
+        }
+        return resultMap;
+    }
+
+    public static Map<String, String> getMapStr(String json) {
+        Map<String, String> resultMap = new HashMap<>();
+
+        try {
+            if (!StringUtils.isBlank(json)) {
+                resultMap = GsonHolder.getInstance().fromJson(json, new TypeToken<HashMap<String, String>>() {
+                }.getType());
+            }
+        } catch (Exception ignored) {
+            resultMap = null;
         } finally {
             if (resultMap == null) {
                 resultMap = new HashMap<>();

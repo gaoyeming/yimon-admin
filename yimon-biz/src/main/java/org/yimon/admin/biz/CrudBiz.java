@@ -1,10 +1,10 @@
 package org.yimon.admin.biz;
 
+import org.springframework.stereotype.Component;
 import org.yimon.admin.core.exception.RejectedException;
 import org.yimon.admin.service.RepositoryService;
 import org.yimon.admin.util.SpringContextHandler;
 import org.yimon.admin.util.constant.ResultCode;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;

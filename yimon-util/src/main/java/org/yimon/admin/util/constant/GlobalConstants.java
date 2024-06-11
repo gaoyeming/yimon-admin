@@ -17,6 +17,10 @@ public class GlobalConstants {
 
     public static final String DATA = "data";
 
+    public static final Long EXPIRE_TIME = 5L;
+
+    public static final String SECRET = "my@yimon";
+
     private GlobalConstants() {
     }
 

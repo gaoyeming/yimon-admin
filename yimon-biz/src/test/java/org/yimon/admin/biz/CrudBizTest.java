@@ -1,9 +1,5 @@
 package org.yimon.admin.biz;
 
-import org.yimon.admin.dal.entity.SysOperationLog;
-import org.yimon.admin.dal.repository.CrudRepository;
-import org.yimon.admin.service.RepositoryService;
-import org.yimon.admin.util.SpringContextHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +10,11 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.yimon.admin.dal.entity.SysOperationLog;
+import org.yimon.admin.dal.repository.CrudRepository;
+import org.yimon.admin.service.RepositoryService;
 import org.yimon.admin.service.impl.*;
+import org.yimon.admin.util.SpringContextHandler;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,7 +61,6 @@ public class CrudBizTest {
         Mockito.when(SpringContextHandler.getBeanByName("gets", RepositoryService.class)).thenReturn(gets);
         Mockito.when(SpringContextHandler.getBeanByName("post", RepositoryService.class)).thenReturn(post);
         Mockito.when(SpringContextHandler.getBeanByName("put", RepositoryService.class)).thenReturn(put);
-
 
 
         PowerMockito.when(crudRepository.operate(Mockito.anyString(), Mockito.anyString(), Mockito.any())).thenReturn(1);

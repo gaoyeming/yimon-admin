@@ -3,10 +3,10 @@ package org.yimon.admin.dal;
 import com.ctrip.platform.dal.dao.DalClient;
 import com.ctrip.platform.dal.dao.DalClientFactory;
 import com.ctrip.platform.dal.dao.DalHints;
-import org.yimon.admin.dal.dao.SysOperationLogDao;
-import org.yimon.admin.dal.entity.SysOperationLog;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.yimon.admin.dal.dao.SysOperationLogDao;
+import org.yimon.admin.dal.entity.SysOperationLog;
 
 import java.sql.SQLException;
 import java.util.List;

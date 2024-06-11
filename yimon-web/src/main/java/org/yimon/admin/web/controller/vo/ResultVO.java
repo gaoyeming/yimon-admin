@@ -1,10 +1,7 @@
 package org.yimon.admin.web.controller.vo;
 
 import com.google.gson.annotations.SerializedName;
-import org.yimon.admin.core.exception.BusinessException;
-import org.yimon.admin.core.exception.InvokeException;
-import org.yimon.admin.core.exception.RejectedException;
-import org.yimon.admin.core.exception.ValidateException;
+import org.yimon.admin.core.exception.*;
 import org.yimon.admin.core.pojo.ABasePojo;
 import org.yimon.admin.core.result.ReturnCode;
 import org.yimon.admin.util.GsonHolder;
@@ -74,6 +71,13 @@ public class ResultVO extends ABasePojo {
     }
 
     public static ResultVO fillRespCode(RejectedException e) {
+        ResultVO resultVO = new ResultVO();
+        resultVO.setRespCode(e.getCode());
+        resultVO.setRespDesc(e.getMessage());
+        return resultVO;
+    }
+
+    public static ResultVO fillRespCode(UserDefinedException e) {
         ResultVO resultVO = new ResultVO();
         resultVO.setRespCode(e.getCode());
         resultVO.setRespDesc(e.getMessage());

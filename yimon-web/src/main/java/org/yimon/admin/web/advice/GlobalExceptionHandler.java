@@ -1,18 +1,15 @@
 package org.yimon.admin.web.advice;
 
-import org.yimon.admin.core.constant.DatePattern;
-import org.yimon.admin.core.exception.BusinessException;
-import org.yimon.admin.core.exception.InvokeException;
-import org.yimon.admin.core.exception.RejectedException;
-import org.yimon.admin.core.exception.ValidateException;
-import org.yimon.admin.core.result.ReturnCode;
-import org.yimon.admin.core.util.DateFormatUtils;
-import org.yimon.admin.util.constant.GlobalConstants;
-import org.yimon.admin.web.controller.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.yimon.admin.core.constant.DatePattern;
+import org.yimon.admin.core.exception.*;
+import org.yimon.admin.core.result.ReturnCode;
+import org.yimon.admin.core.util.DateFormatUtils;
+import org.yimon.admin.util.constant.GlobalConstants;
+import org.yimon.admin.web.controller.vo.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -68,6 +65,22 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RejectedException.class)
     public ResultVO handlerRejectedException(HttpServletRequest httpServletRequest, RejectedException e) {
         log.warn("happen RejectedException:", e);
+        ResultVO resultVO = ResultVO.fillRespCode(e);
+        resultVO.setTraceId(ThreadContext.get(GlobalConstants.TRACE_ID));
+        resultVO.setResponseTime(DateFormatUtils.format(new Date(), DatePattern.NORM_DATETIME_PATTERN));
+        log.info("execute api:{}, response:{}", httpServletRequest.getServletPath(), resultVO);
+        return resultVO;
+    }
+
+    /**
+     * 定义异常
+     *
+     * @param e 异常
+     * @return 处理结果
+     */
+    @ExceptionHandler(UserDefinedException.class)
+    public ResultVO handlerUserDefinedException(HttpServletRequest httpServletRequest, UserDefinedException e) {
+        log.warn("happen UserDefinedException:", e);
         ResultVO resultVO = ResultVO.fillRespCode(e);
         resultVO.setTraceId(ThreadContext.get(GlobalConstants.TRACE_ID));
         resultVO.setResponseTime(DateFormatUtils.format(new Date(), DatePattern.NORM_DATETIME_PATTERN));

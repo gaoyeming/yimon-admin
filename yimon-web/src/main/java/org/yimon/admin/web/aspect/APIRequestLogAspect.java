@@ -17,7 +17,6 @@ import org.yimon.admin.web.handler.HttpServletHandler;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,8 +70,8 @@ public class APIRequestLogAspect {
         String operaParam = proceedingJoinPoint.getArgs() == null ? StringUtils.EMPTY : GsonHolder.toJsonNormDate(proceedingJoinPoint.getArgs());
         //操作结果
         String operaResult = StringUtils.EMPTY;
-        //操作状态（0正常 1异常）
-        int status = 0;
+        //操作状态（1正常 0异常）
+        int status = 1;
         try {
             //执行目标方法获取返回对象
             Object response = proceedingJoinPoint.proceed();
@@ -80,7 +79,7 @@ public class APIRequestLogAspect {
             operaResult = response == null ? StringUtils.EMPTY : GsonHolder.toJsonNormDate(response);
             return response;
         } catch (Throwable e) {
-            status = 1;//操作发生异常
+            status = 0;//操作发生异常
             operaResult = e.getMessage();
             throw e;
         } finally {
@@ -99,7 +98,7 @@ public class APIRequestLogAspect {
 
             //打印日志
             StringBuilder logStr = new StringBuilder("Operation log").append(System.lineSeparator()).append("【").append(System.lineSeparator());
-            operaLog.forEach((k,v)-> {
+            operaLog.forEach((k, v) -> {
                 logStr.append(k).append(":").append(v).append(System.lineSeparator());
             });
             logStr.append("】");

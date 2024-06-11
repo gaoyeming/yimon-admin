@@ -2,6 +2,7 @@ package org.yimon.admin.service;
 
 import com.ctrip.platform.dal.dao.annotation.Database;
 import org.reflections.Reflections;
+import org.yimon.admin.core.check.Validate;
 import org.yimon.admin.core.exception.ValidateException;
 import org.yimon.admin.core.util.StringUtils;
 import org.yimon.admin.util.constant.ResultCode;
@@ -46,6 +47,7 @@ public abstract class ARepositoryService {
      * @return Class
      */
     protected Class<?> getEntityClass(String tableName) {
+        Validate.isNotBank(tableName, "tableName not be empty");
         //反射工具包，指明扫描路径
         Reflections reflections = new Reflections(DAL_ENTITY_PACKAGE);
         //获取带Handler注解的类
@@ -63,6 +65,7 @@ public abstract class ARepositoryService {
      * @return String
      */
     protected String getDataBaseName(String tableName) {
+        Validate.isNotBank(tableName, "tableName not be empty");
         Class<?> tableClass = this.getEntityClass(tableName);
         Database database = tableClass.getAnnotation(Database.class);
         return Optional.ofNullable(database).map(Database::name).
@@ -77,6 +80,8 @@ public abstract class ARepositoryService {
      * @return 表对应的列名称
      */
     protected String getColumnName(String tableName, String fieldName) {
+        Validate.isNotBank(tableName, "tableName not be empty");
+        Validate.isNotBank(fieldName, "fieldName not be empty");
         try {
             Class<?> tableClass = this.getEntityClass(tableName);
             Field field = tableClass.getDeclaredField(fieldName);
@@ -99,6 +104,8 @@ public abstract class ARepositoryService {
      * @return LinkedHashMap sql对应值
      */
     protected LinkedHashMap<String, Object> join(String tableName, StringBuilder sql, Map<String, Object> paramsMap, String linkStr) {
+        Validate.isNotBank(tableName, "tableName not be empty");
+        Validate.isNonNull(sql, "tableName not be null");
         LinkedHashMap<String, Object> paramsLink = new LinkedHashMap<>();
         paramsMap.forEach((k, v) -> {
             //特殊字符不需要进行拼接
@@ -144,6 +151,8 @@ public abstract class ARepositoryService {
      * @return LinkedHashMap sql对应值
      */
     protected LinkedHashMap<String, Object> select(String tableName, StringBuilder sql, Map<String, Object> paramsMap) {
+        Validate.isNotBank(tableName, "tableName not be empty");
+        Validate.isNonNull(sql, "tableName not be null");
         //判断是否存在查询列
         String column = "*";
         if (paramsMap.get(COLUMN) != null) {
@@ -175,6 +184,7 @@ public abstract class ARepositoryService {
      * @return String 排序sql
      */
     protected String appendOrder(String tableName, String order) {
+        Validate.isNotBank(tableName, "tableName not be empty");
         if (StringUtils.isBlank(order)) {
             return StringUtils.EMPTY;
         }

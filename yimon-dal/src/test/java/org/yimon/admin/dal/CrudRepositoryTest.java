@@ -1,10 +1,10 @@
 package org.yimon.admin.dal;
 
 import com.ctrip.platform.dal.dao.DalClientFactory;
-import org.yimon.admin.dal.entity.SysOperationLog;
-import org.yimon.admin.dal.repository.CrudRepository;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.yimon.admin.dal.entity.SysOperationLog;
+import org.yimon.admin.dal.repository.CrudRepository;
 
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -37,28 +37,28 @@ public class CrudRepositoryTest {
     public void deleteTest() throws SQLException {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
         params.put("id", 1);
-        System.out.println(crudRepository.operate("MySql_yimon","DELETE FROM sys_operation_log WHERE id = ?", params));
+        System.out.println(crudRepository.operate("MySql_yimon", "DELETE FROM sys_operation_log WHERE id = ?", params));
     }
 
     @Test
     public void countTest() throws SQLException {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
         params.put("id", 2);
-        System.out.println(crudRepository.selectFirst("MySql_yimon","SELECT count(*) FROM sys_operation_log WHERE id = ? ", params, Integer.class));
+        System.out.println(crudRepository.selectFirst("MySql_yimon", "SELECT count(*) FROM sys_operation_log WHERE id = ? ", params, Integer.class));
     }
 
     @Test
     public void findListTest() throws SQLException {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 //        params.put("id", 1);
-        System.out.println(crudRepository.selectList("MySql_yimon","SELECT * FROM sys_operation_log ", params, 1, 20, Map.class));
+        System.out.println(crudRepository.selectList("MySql_yimon", "SELECT * FROM sys_operation_log ", params, 1, 20, Map.class));
     }
 
     @Test
     public void findFirstTest() throws SQLException {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 //        params.put("id", 1);
-        System.out.println(crudRepository.selectFirst("MySql_yimon","SELECT * FROM sys_operation_log ", params, SysOperationLog.class));
+        System.out.println(crudRepository.selectFirst("MySql_yimon", "SELECT * FROM sys_operation_log ", params, SysOperationLog.class));
     }
 
 

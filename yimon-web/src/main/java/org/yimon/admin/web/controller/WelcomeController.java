@@ -22,6 +22,7 @@ public class WelcomeController {
 
     /**
      * 页面路由配置--后续新增页面路由都需要再这里进行配置
+     *
      * @return String-指定页面
      */
     @GetMapping(value = "/")

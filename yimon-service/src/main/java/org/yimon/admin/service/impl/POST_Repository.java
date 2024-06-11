@@ -2,6 +2,7 @@ package org.yimon.admin.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.yimon.admin.core.check.Validate;
 import org.yimon.admin.core.exception.BusinessException;
 import org.yimon.admin.core.exception.ValidateException;
 import org.yimon.admin.dal.repository.CrudRepository;
@@ -28,6 +29,8 @@ public class POST_Repository extends ARepositoryService implements RepositorySer
 
     @Override
     public Map<String, Object> execute(String tableName, Map<String, Object> paramsMap) {
+        Validate.isNotBank(tableName, "tableName not be empty");
+        Validate.isNonNull(paramsMap, "paramsMap not be empty");
         //组合更新SQL
         StringBuilder sql = new StringBuilder("UPDATE ").append(tableName).append(" SET ");
         //记录参数并保证与需要更新的一致
@@ -43,7 +46,7 @@ public class POST_Repository extends ARepositoryService implements RepositorySer
         List<String> whereList = Arrays.asList(String.valueOf(where).split(","));
         whereList.forEach(w -> {
             sql.append(w).append("=? AND ");
-            if(paramsMap.get(w) instanceof String && ((String) paramsMap.get(w)).contains("->")) {
+            if (paramsMap.get(w) instanceof String && ((String) paramsMap.get(w)).contains("->")) {
                 //标识存在该字段即作为更新值也作为条件 只取更新后的值
                 paramsLink.put(w + WHERE, ((String) paramsMap.get(w)).split("->")[0]);
             } else {

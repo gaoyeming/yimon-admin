@@ -1,13 +1,13 @@
 package org.yimon.admin.core;
 
-import org.yimon.admin.util.GsonHolder;
-import org.yimon.admin.web.WebApplication;
-import org.yimon.admin.web.controller.CrudController;
-import org.yimon.admin.web.controller.vo.RequestVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.yimon.admin.util.GsonHolder;
+import org.yimon.admin.web.WebApplication;
+import org.yimon.admin.web.controller.CrudController;
+import org.yimon.admin.web.controller.vo.RequestVO;
 
 import javax.annotation.Resource;
 import java.util.Arrays;

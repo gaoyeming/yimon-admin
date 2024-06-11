@@ -1,5 +1,6 @@
 package org.yimon.admin.core.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,5 +17,14 @@ public class DateFormatUtils {
     public static String format(Date date, String pattern) {
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         return formatter.format(date);
+    }
+
+    public static Date parse(String dateStr, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        try {
+            return sdf.parse(dateStr);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }

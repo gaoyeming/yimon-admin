@@ -49,7 +49,7 @@ public class CrudRepository {
         FreeUpdateSqlBuilder sqlBuilder = new FreeUpdateSqlBuilder();
         sqlBuilder.setTemplate(sql);
         StatementParameters parameters = this.covertParameters(paramMap);
-        if(DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
+        if (DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
             throw new RejectedException(ResultCode.DB_FAIL.code(), "database is not supported, please check");
         }
         return DAL_QUERY_DAO_MAP.get(dataBaseName).update(sqlBuilder, parameters, hints);
@@ -68,7 +68,7 @@ public class CrudRepository {
             builder.atPage(pageNo, pageSize);
         }
         StatementParameters parameters = this.covertParameters(paramMap);
-        if(DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
+        if (DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
             throw new RejectedException(ResultCode.DB_FAIL.code(), "database is not supported, please check");
         }
         return DAL_QUERY_DAO_MAP.get(dataBaseName).query(builder, parameters, hints);
@@ -84,7 +84,7 @@ public class CrudRepository {
         builder.setTemplate(sql);
         builder.mapWith(tClass).requireFirst().nullable();
         StatementParameters parameters = this.covertParameters(paramMap);
-        if(DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
+        if (DAL_QUERY_DAO_MAP.get(dataBaseName) == null) {
             throw new RejectedException(ResultCode.DB_FAIL.code(), "database is not supported, please check");
         }
         return DAL_QUERY_DAO_MAP.get(dataBaseName).query(builder, parameters, hints);

@@ -2,6 +2,7 @@ package org.yimon.admin.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.yimon.admin.core.check.Validate;
 import org.yimon.admin.core.exception.BusinessException;
 import org.yimon.admin.core.exception.ValidateException;
 import org.yimon.admin.dal.repository.CrudRepository;
@@ -30,6 +31,8 @@ public class DELETE_Repository extends ARepositoryService implements RepositoryS
 
     @Override
     public Map<String, Object> execute(String tableName, Map<String, Object> paramsMap) {
+        Validate.isNotBank(tableName, "tableName not be empty");
+        Validate.isNonNull(paramsMap, "paramsMap not be empty");
         //组合删除SQL
         StringBuilder sql = new StringBuilder("DELETE FROM ").append(tableName).append(" WHERE ");
         //记录参数并保证与WHERE条件顺序一致

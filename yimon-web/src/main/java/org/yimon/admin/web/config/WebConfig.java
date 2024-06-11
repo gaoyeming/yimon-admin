@@ -1,11 +1,13 @@
 package org.yimon.admin.web.config;
 
 import com.google.gson.Gson;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.yimon.admin.core.async.ThreadPoolExecutor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.yimon.admin.core.async.ThreadPoolExecutor;
+import org.yimon.admin.web.filter.MyCORSFilter;
 
 /**
  * @author yeming.gao
@@ -30,6 +32,21 @@ public class WebConfig {
     @Bean
     public GsonHttpMessageConverter customGsonHttpMessageConverter(Gson gson) {
         return new GsonHttpMessageConverter(gson);
+    }
+
+    /**
+     * 允许跨域过滤器
+     *
+     * @return FilterRegistrationBean
+     */
+    @Bean
+    public FilterRegistrationBean<MyCORSFilter> corsFilterRegistration() {
+        FilterRegistrationBean<MyCORSFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new MyCORSFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("MyCORSFilter");
+        registration.setOrder(0);
+        return registration;
     }
 
 
