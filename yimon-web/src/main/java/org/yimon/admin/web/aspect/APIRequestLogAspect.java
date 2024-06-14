@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.yimon.admin.biz.CrudBiz;
+import org.yimon.admin.core.util.SnowFlakeUtils;
 import org.yimon.admin.core.util.StringUtils;
 import org.yimon.admin.util.GsonHolder;
 import org.yimon.admin.util.constant.GlobalConstants;
@@ -60,12 +61,12 @@ public class APIRequestLogAspect {
         APIRequestLog apiRequestRecord = method.getAnnotation(APIRequestLog.class);
 
         Map<String, Object> operaLog = new HashMap<>();
-        operaLog.put("traceId", ThreadContext.get(GlobalConstants.TRACE_ID));//追踪流水号
+        operaLog.put("traceId", ThreadContext.get(GlobalConstants.TRACE_ID) == null ? SnowFlakeUtils.generateTraceId("YIMON_ADMIN_") : ThreadContext.get(GlobalConstants.TRACE_ID));//追踪流水号
         operaLog.put("operaType", OPERA_TYPE);//操作类型
         operaLog.put("operaUser", HttpServletHandler.getUser(request));//操作用户
         operaLog.put("operaTitle", apiRequestRecord.value());//操作标题
         operaLog.put("operaDevice", HttpServletHandler.getDevice(request));//请求设备信息
-        operaLog.put("operaUrl", request.getServletPath());//操作入口
+        operaLog.put("operaUrl", StringUtils.isBlank(request.getServletPath()) ? StringUtils.SPACE : request.getServletPath());//操作入口
         //操作参数
         String operaParam = proceedingJoinPoint.getArgs() == null ? StringUtils.EMPTY : GsonHolder.toJsonNormDate(proceedingJoinPoint.getArgs());
         //操作结果

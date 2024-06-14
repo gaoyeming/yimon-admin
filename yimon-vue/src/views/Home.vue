@@ -44,3 +44,23 @@ export default {
   },
 };
 </script>
+
+<style>
+.home {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.content-box {
+  position: absolute;
+  left: 250px;
+  right: 0;
+  top: 70px;
+  bottom: 0;
+  padding-bottom: 30px;
+  -webkit-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
+  background: #eef0fc;
+  overflow: hidden;
+}
+</style>

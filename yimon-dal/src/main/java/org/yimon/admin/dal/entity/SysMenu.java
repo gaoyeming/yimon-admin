@@ -55,9 +55,9 @@ public class SysMenu implements DalPojo {
 	@Type(value=Types.INTEGER)
 	private Integer menuType;
 	
-	@Column(name="order")
+	@Column(name="sort")
 	@Type(value=Types.INTEGER)
-	private Integer order;
+	private Integer sort;
 
 	public Long getId() {
 		return id;
@@ -139,11 +139,11 @@ public class SysMenu implements DalPojo {
 		this.menuType = menuType;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 }

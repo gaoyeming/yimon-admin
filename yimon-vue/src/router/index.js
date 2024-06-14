@@ -18,10 +18,17 @@ const constantRoutes = [{
             path: '/index',
             name: 'Index',
             meta: {
-                icon: "el-icon-s-home",
                 title: "首页"
             },
             component: () => import('@/views/sys/Index')
+        },
+        {
+            path: '/user',
+            name: 'User',
+            meta: {
+                title: "用户管理"
+            },
+            component: () => import('@/views/sys/User')
         },
         //其他菜单动态从后台数据获取
     ]

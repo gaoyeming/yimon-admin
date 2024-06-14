@@ -12,7 +12,7 @@ public class AesUtilsTest {
 
     @Test
     public void encrypt() {
-        System.out.println(AesUtils.encrypt("111", GlobalConstants.SECRET));
+        System.out.println(AesUtils.encrypt("13125106701", GlobalConstants.SECRET));
     }
 
     @Test

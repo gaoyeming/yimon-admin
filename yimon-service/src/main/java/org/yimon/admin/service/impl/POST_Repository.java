@@ -45,12 +45,13 @@ public class POST_Repository extends ARepositoryService implements RepositorySer
         }
         List<String> whereList = Arrays.asList(String.valueOf(where).split(","));
         whereList.forEach(w -> {
-            sql.append(w).append("=? AND ");
+            String column = super.getColumnName(tableName, w);
+            sql.append(column).append("=? AND ");
             if (paramsMap.get(w) instanceof String && ((String) paramsMap.get(w)).contains("->")) {
                 //标识存在该字段即作为更新值也作为条件 只取更新后的值
-                paramsLink.put(w + WHERE, ((String) paramsMap.get(w)).split("->")[0]);
+                paramsLink.put(column + WHERE, ((String) paramsMap.get(w)).split("->")[0]);
             } else {
-                paramsLink.put(w + WHERE, paramsMap.get(w));
+                paramsLink.put(column + WHERE, paramsMap.get(w));
             }
         });
         sql.setLength(sql.length() - 4);

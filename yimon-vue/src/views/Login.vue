@@ -75,14 +75,16 @@ export default {
             this.loginForm.captchaKey = this.$commonUtils.getUuid();
 
             const params = {
-                captchaType:this.loginForm.captchaType,
-                captchaKey:this.loginForm.captchaKey
+                captchaType: this.loginForm.captchaType,
+                captchaKey: this.loginForm.captchaKey
             }
             this.$axios.post('/verify/captcha/create', params).then(response => {
                 if (response["captchaImg"] != null) {
                     this.captchaImg = "data:image/png;base64," + response["captchaImg"];
                 }
-            })
+            }).catch((error) => {
+                console.error("request error:", error);
+            });
         },
         //显示或隐藏密码
         showLoginPassword() {
@@ -99,14 +101,28 @@ export default {
         login(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    //提交之前将密码进行base64编码，后续可以替换其他方案进行加密
+                    this.loginForm.loginPassword = btoa(this.loginForm.loginPassword);
                     this.$axios.post('/user/login', this.loginForm)
                         .then(response => {
                             //登录成功
                             this.$message.success({
-                                message: response.loginName + "【登录成功】",
+                                message: response.user.loginName + "【登录成功】",
                                 duration: 3 * 1000
                             });
+                            //记录token信息
+                            this.$store.state.token = response.token;
+                            //记录用户信息
+                            this.$store.commit("login", response.user);
+                            //记录菜单信息
+                            this.$store.state.menu.menuList = response.menuList;
+                            //跳转到首页
+                            this.$router.push("/");
+                        }).catch((error) => {
+                            console.error("request error:", error);
                         }).finally(() => {
+                            //重置表单
+                            this.$resetForm(formName);
                             //刷新验证码
                             this.getCaptchaImg();
                         });

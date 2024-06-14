@@ -1,5 +1,3 @@
-import 'default-passive-events'
-
 import { createApp } from 'vue'
 
 import { ElMessage } from 'element-plus'
@@ -10,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import App from '@/App.vue'
 import router from '@/router/index.js'
 import { showLoading, closeLoading } from "@/utils/loading";
+import store from '@/store/index'
 import axios from "@/utils/axios";
 import commonUtils from '@/utils/common'
 
@@ -20,6 +19,7 @@ app.config.globalProperties.$message = ElMessage;
 app.config.globalProperties.$showLoading = showLoading;
 app.config.globalProperties.$closeLoading = closeLoading;
 app.config.globalProperties.$commonUtils = commonUtils
+
 //设置公共方法
 //公共方法-复制
 app.config.globalProperties.$copyValue = function (sourceData) {
@@ -156,5 +156,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+
 app.use(router)
+app.use(store)
 app.use(ElementPlus).mount('#app')

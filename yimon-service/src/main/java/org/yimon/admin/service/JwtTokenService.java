@@ -8,7 +8,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.yimon.admin.core.check.Validate;
-import org.yimon.admin.service.model.UserDetailModel;
 import org.yimon.admin.util.constant.GlobalConstants;
 
 import java.util.Date;
@@ -28,18 +27,18 @@ public class JwtTokenService {
     /**
      * 生产JWT(token)
      *
-     * @param model 登录对象
+     * @param loginName 登录名
      * @return token
      */
-    public String generateToken(UserDetailModel model) {
-        Validate.isNonNull(model, "model not be null");
+    public String generateToken(String loginName) {
+        Validate.isNotBank(loginName, "loginName not be null");
         //获取最后登录时间
         Date loginDate = new Date();
         //创建jwt
         return JWT.create()
-                .withSubject(model.getLoginName())//主题
+                .withSubject(loginName)//主题
                 .withIssuedAt(loginDate)//签发时间
-                .withExpiresAt(new Date(loginDate.getTime() + GlobalConstants.EXPIRE_TIME * 1000))//过期时间
+                .withExpiresAt(new Date(loginDate.getTime() + GlobalConstants.EXPIRE_TIME * 60 * 1000))//过期时间
                 .sign(ALGORITHM);
     }
 
@@ -49,7 +48,7 @@ public class JwtTokenService {
      * @param token token
      * @return 登录名
      */
-    public static String getLoginNameFromToken(String token) {
+    public String getLoginNameFromToken(String token) {
         Validate.isNotBank(token, "token not be empty");
         try {
             JWTVerifier verifier = JWT.require(ALGORITHM).build();
@@ -66,7 +65,7 @@ public class JwtTokenService {
      * @param token token
      * @return true-过期；false-未过期
      */
-    public static boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Validate.isNotBank(token, "token not be empty");
         try {
             JWTVerifier verifier = JWT.require(ALGORITHM).build();
@@ -83,7 +82,7 @@ public class JwtTokenService {
      * @param token token
      * @return 签发时间
      */
-    public static Date getIssuedAt(String token) {
+    public Date getIssuedAt(String token) {
         Validate.isNotBank(token, "token not be empty");
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getIssuedAt();

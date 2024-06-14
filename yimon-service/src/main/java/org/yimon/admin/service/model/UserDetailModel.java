@@ -2,6 +2,7 @@ package org.yimon.admin.service.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.yimon.admin.core.pojo.ABasePojo;
 
 /**
  * @author: ym.gao
@@ -11,8 +12,9 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class UserDetailModel {
+public class UserDetailModel extends ABasePojo {
 
+    private Long id;//主键
     private String loginName;//登录名
     private String loginPassword;//登录密码
     private String realName;//真实姓名
@@ -22,6 +24,4 @@ public class UserDetailModel {
     private String headPortraits;//用户头像
     private String lastLoginDate;//上次登录时间
     private String lastLoginDevice;//上次登录设备
-
-    private String jwtToken;//登录token信息
 }

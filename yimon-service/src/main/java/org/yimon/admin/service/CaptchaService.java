@@ -55,6 +55,8 @@ public class CaptchaService {
         //获取缓存中的验证码
         String cacheCaptcha = LocalCache.get(StringUtils.joinWith("::", captchaType, captchaKey));
         if(captcha.equalsIgnoreCase(cacheCaptcha)) {
+            //比对成功则删除缓存
+            LocalCache.remove(StringUtils.joinWith("::", captchaType, captchaKey));
             return Boolean.TRUE;
         }
         return Boolean.FALSE;

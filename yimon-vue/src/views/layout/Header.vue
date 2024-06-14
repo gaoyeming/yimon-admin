@@ -65,7 +65,7 @@ export default {
     data() {
         return {
             message: 2,
-            collapseChage: false,
+            collapse: false,
             currentUser: {
                 loginName: 'admin',
                 realName: '管理员',
@@ -82,6 +82,11 @@ export default {
             } else {
                 document.body.requestFullscreen.call(document.body);
             }
+        },
+        collapseChage() {
+            this.collapse = !this.collapse;
+            // 折叠功能，控制菜单是否折叠
+            this.$store.state.menu.collapse = this.collapse;
         },
     }
 }
@@ -107,7 +112,7 @@ export default {
     text-align: center;
     float: left;
     height: 100%;
-    width: 12%;
+    width: 250px;
     /* padding-left: 25px; */
 }
 
@@ -115,7 +120,7 @@ export default {
     display: flex;
     align-items: center;
     float: left;
-    /* width: 35px; */
+    overflow: hidden;
 }
 
 .collapse-btn {
@@ -124,7 +129,6 @@ export default {
     align-items: center;
     float: right;
     height: 100%;
-    padding: 0 10px;
     cursor: pointer;
     opacity: 0.8;
     font-size: 25px;

@@ -37,17 +37,19 @@ request.interceptors.response.use(response => {
     } else if (res.resp_code === 201) {//请求成功，data不存在
         return {};
     } else {//请求失败
+        const msg = res.resp_desc ? res.resp_desc : '未知错误！';
         ElMessage.error({
-            message: res.resp_desc ? res.resp_desc : '未知错误！',
+            message: msg,
             duration: 3 * 1000
         })
-        return Promise.reject(response.data.resp_desc);//抛出错误信息
+        return Promise.reject(msg);//抛出错误信息
     }
 }, error => {//请求出现异常
     console.error("response exception:", error);
     closeLoading();//关闭loading
-    ElMessage.error({ message: error.message, duration: 3 * 1000 });
-    return Promise.reject(error.message);//抛出错误信息
+    const msg = error.message ? error.message : '请求异常';
+    ElMessage.error({ message: msg, duration: 3 * 1000 });
+    return Promise.reject(msg);//抛出错误信息
 });
 
 export default request

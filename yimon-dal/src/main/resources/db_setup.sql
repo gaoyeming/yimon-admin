@@ -78,7 +78,7 @@ CREATE TABLE `sys_menu`
     `menu_url`            varchar(64) NOT NULL DEFAULT '' COMMENT '菜单url',
     `menu_path`           varchar(64) NOT NULL DEFAULT '' COMMENT '菜单存放路径',
     `menu_type`           int         NOT NULL DEFAULT 0 COMMENT '菜单类型：0:目录,1:菜单,2:子功能',
-    `order`               int         NOT NULL DEFAULT 0 COMMENT '菜单排序（只对同类型菜单生效）',
+    `sort`               int         NOT NULL DEFAULT 0 COMMENT '菜单排序（只对同类型菜单生效）',
     PRIMARY KEY (`id`),
     UNIQUE KEY `sys_menu_unique_menu_code` (`menu_code`),
     KEY `sys_menu_idx_01` (`menu_name`),
@@ -120,3 +120,56 @@ CREATE TABLE `sys_role_menu`
     KEY `sys_operation_log_idx_dataChange_lastTime` (`dataChange_lastTime`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色菜单映射表';
+
+-- 数据初始化
+INSERT INTO yimon_admin.sys_user (login_name, login_password, real_name, contact_email, contact_mobile, contact_address,
+                                  head_portraits, last_login_date, last_login_device, enabled)
+VALUES ('admin', 'xOXkH5VxISnQDond3AENPw==', '管理员', 'yimon@foxmail.com', 'zXrKeIQ4zHT6UNMIv6M60g==', '上海浦东',
+        '/assets/img/user/header_default.jpeg', NULL, '', 1);
+INSERT INTO yimon_admin.sys_role (role_code, role_name, remark)
+VALUES ('SYS_ADMIN', '系统管理员', '管理员');
+INSERT INTO yimon_admin.sys_menu (parent_id, menu_code, menu_name, menu_icon, menu_url, menu_path, menu_type, `sort`)
+VALUES (0, 'Sys-Manage', '系统管理', 'Operation', '', '', 0, 1),
+       (1, 'Sys-Menu', '菜单管理', 'Menu', '/menu', '/sys/Menu', 1, 1),
+       (1, 'Sys-Role', '角色管理', 'Rank', '/role', '/sys/Role', 1, 2),
+       (1, 'Sys-User', '用户管理', 'Avatar', '/user', '/sys/User', 1, 3),
+       (2, 'Sys-Menu-Gets', '获取菜单列表', '', 'http://127.0.0.1:8080', '/crud/sys_menu/gets', 2, 1),
+       (2, 'Sys-Menu-Get', '获取指定菜单', '', 'http://127.0.0.1:8080', '/crud/sys_menu/get', 2, 2),
+       (2, 'Sys-Menu-Put', '新增菜单', '', 'http://127.0.0.1:8080', '/crud/sys_menu/put', 2, 3),
+       (2, 'Sys-Menu-Delete', '删除菜单', '', 'http://127.0.0.1:8080', '/crud/sys_menu/delete', 2, 4),
+       (2, 'Sys-Menu-Post', '更新菜单', '', 'http://127.0.0.1:8080', '/crud/sys_menu/post', 2, 5),
+       (3, 'Sys-Role-Gets', '获取角色列表', '', 'http://127.0.0.1:8080', '/crud/sys_role/gets', 2, 1),
+       (3, 'Sys-Role-Get', '获取指定角色', '', 'http://127.0.0.1:8080', '/crud/sys_role/get', 2, 2),
+       (3, 'Sys-Role-Put', '新增角色', '', 'http://127.0.0.1:8080', '/crud/sys_role/put', 2, 3),
+       (3, 'Sys-Role-Delete', '删除角色', '', 'http://127.0.0.1:8080', '/crud/sys_role/delete', 2, 4),
+       (3, 'Sys-Role-Post', '更新角色', '', 'http://127.0.0.1:8080', '/crud/sys_role/post', 2, 5),
+       (4, 'Sys-User-Gets', '获取用户列表', '', 'http://127.0.0.1:8080', '/crud/sys_user/gets', 2, 1),
+       (4, 'Sys-User-Get', '获取指定用户', '', 'http://127.0.0.1:8080', '/crud/sys_user/get', 2, 2),
+       (4, 'Sys-User-Put', '新增用户', '', 'http://127.0.0.1:8080', '/crud/sys_user/put', 2, 3),
+       (4, 'Sys-User-Delete', '删除用户', '', 'http://127.0.0.1:8080', '/crud/sys_user/delete', 2, 4),
+       (4, 'Sys-User-Post', '更新用户', '', 'http://127.0.0.1:8080', '/crud/sys_user/post', 2, 5);
+INSERT INTO yimon_admin.sys_user_role (user_id, role_id, remark)
+VALUES (1, 1, '管理员-系统管理员');
+INSERT INTO yimon_admin.sys_role_menu (role_id, menu_id, remark)
+VALUES (1, 1, '系统管理员-系统管理'),
+       (1, 2, '系统管理员-菜单管理'),
+       (1, 3, '系统管理员-角色管理'),
+       (1, 4, '系统管理员-用户管理'),
+       (1, 5, '系统管理员-获取菜单列表'),
+       (1, 6, '系统管理员-获取指定菜单'),
+       (1, 7, '系统管理员-新增菜单'),
+       (1, 8, '系统管理员-删除菜单'),
+       (1, 9, '系统管理员-更新菜单'),
+       (1, 10, '系统管理员-获取角色列表'),
+       (1, 11, '系统管理员-获取指定角色'),
+       (1, 12, '系统管理员-新增角色'),
+       (1, 13, '系统管理员-删除角色'),
+       (1, 14, '系统管理员-更新角色'),
+       (1, 15, '系统管理员-获取用户列表'),
+       (1, 16, '系统管理员-获取指定用户'),
+       (1, 17, '系统管理员-新增用户'),
+       (1, 18, '系统管理员-删除用户'),
+       (1, 19, '系统管理员-更新用户');
+
+
+
