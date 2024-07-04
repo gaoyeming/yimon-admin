@@ -124,7 +124,7 @@ CREATE TABLE `sys_role_menu`
 -- 数据初始化
 INSERT INTO yimon_admin.sys_user (login_name, login_password, real_name, contact_email, contact_mobile, contact_address,
                                   head_portraits, last_login_date, last_login_device, enabled)
-VALUES ('admin', 'xOXkH5VxISnQDond3AENPw==', '管理员', 'yimon@foxmail.com', 'zXrKeIQ4zHT6UNMIv6M60g==', '上海浦东',
+VALUES ('admin', 'xOXkH5VxISnQDond3AENPw==', '管理员', 'yimon@foxmail.com', '18121213232', '上海浦东',
         '/assets/img/user/header_default.jpeg', NULL, '', 1);
 INSERT INTO yimon_admin.sys_role (role_code, role_name, remark)
 VALUES ('SYS_ADMIN', '系统管理员', '管理员');

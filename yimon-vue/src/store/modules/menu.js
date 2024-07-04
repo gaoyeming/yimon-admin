@@ -45,7 +45,7 @@ export default {
 						"menuPath": "/sys/User",
 						"menuType": 1,
 						"children": []
-					}
+					},
 				]
 			}
 		],

@@ -13,7 +13,8 @@
     "default-passive-events": "^2.0.0",
     "element-plus": "^2.7.4",
     "vue": "^3.2.13",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

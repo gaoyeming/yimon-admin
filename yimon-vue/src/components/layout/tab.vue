@@ -130,7 +130,6 @@ export default {
     position: relative;
     overflow: hidden;
     background: #fff;
-    /* padding: 2px 120px 0 0; */
 }
 
 .tab {

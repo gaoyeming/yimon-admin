@@ -12,6 +12,21 @@ import store from '@/store/index'
 import axios from "@/utils/axios";
 import commonUtils from '@/utils/common'
 
+//table-custom中table列未设置width时，页面大小变化时会抛出异常ResizeObserver loop completed with undelivered notifications.
+//是element-plus的el-table组件引起的错误
+//原因：element-ui 自2.3.5版本后，Table-column取消了默认宽度大小，增加了 type参数，
+//     type的可选值有selection/index/expand，每个type对应了一些默认的宽度设置，
+//     设置了type不报ResizeObserver loop limit exceeded错误了，
+//     但是column的宽度不再自适应均分table的宽度，只能给定width的宽度
+import { debounce } from "lodash";
+const resizeObserver  = (window).ResizeObserver;
+(window).ResizeObserver = class ResizeObserver extends resizeObserver  {
+  constructor(callback) {
+    callback = debounce(callback, 100);
+    super(callback);
+  }
+};
+
 const app = createApp(App);
 //设置公共属性
 app.config.globalProperties.$axios = axios;

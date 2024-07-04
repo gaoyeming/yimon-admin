@@ -1,27 +1,42 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import Home from "@/views/Home.vue";
-
 //常量路由
 const constantRoutes = [{
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/Login')
+    component: () => import('@/components/Login.vue'),
+    meta: {
+        title: "登录页"
+    },
 },
 {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('@/components/Home.vue'),
     redirect: '/index',
     children: [
         {
             path: '/index',
             name: 'Index',
+            component: () => import('@/components/Index.vue'),
             meta: {
                 title: "首页"
             },
-            component: () => import('@/views/sys/Index')
         },
+        {
+            path: '/404',
+            name: 'NotFound',
+            component: () => import('@/components/error/404.vue'),
+            meta: {
+                title: "NotFound"
+            }
+        },
+        {
+            path: '/:catchAll(.*)',
+            //当路由不存在时， 重定向到404页面
+            redirect: '/404',
+        },
+        //其他页面路由
         {
             path: '/user',
             name: 'User',
